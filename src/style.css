@@ -1,0 +1,217 @@
+body{
+    background-image: url('./assets/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: snow;
+    display: grid;
+    place-items: center;
+    height: 90vh;
+    font-family: 'cairo', sans-serif;
+}
+
+.pre-container{
+    display: grid;
+    max-width: 500px;
+    height: 500;
+    place-items: center;
+    align-content: center;
+    padding: 50px;
+}
+
+.card-container{
+    display: grid;
+    max-width: 500px;
+    height: 500;
+    place-items: center;
+    align-content: center;
+    padding: 30px 60px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.game-container{
+    display: grid;
+    width: 1000px;
+    height: inherit;
+    place-items: center;
+    align-content: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding-bottom: 25px;
+}
+
+.title{
+    color: #cf2233;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.title img{
+    width: 50px;
+}
+
+.btn-restart{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    align-self: center;
+    padding: 8px 12px;
+    width: 100px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 20px;
+    background-color: #cf2233;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 5, .6);
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.btn-play{
+    padding: 8px 12px;
+    width: 100px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 20px;
+    background-color: #cf2233;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 5, .6);
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.container{
+    display: none;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    place-items: center;
+}
+
+.container-item{
+    position: relative;
+    box-sizing: border-box;
+}
+
+.container-item-selected .card {
+    transform: rotateY(180deg);
+}
+
+.card{
+    transform-style: preserve-3d;
+    transition: all .3s ease;
+    border-radius: 5px;
+    width: 130px;
+    height: 110px; 
+    cursor: pointer;
+    margin: 1px 0px;
+}
+
+.card-base{
+    background-color: #cf2233;
+    position: absolute;
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.card-back{
+    background-color: #e67e22;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.card-base, .card-back{
+    font-size: 20px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+    border: none;
+}
+
+h4{
+    text-transform: uppercase;
+}
+
+.card-back h5{
+    margin-top: 0px;
+    text-transform: uppercase;
+}
+
+.card-back img{
+    margin-top: -43px;
+}
+
+.modal{
+    display: grid;
+    place-items: center;
+    align-content: center;
+    padding: 30px 60px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #cf2233;
+    font-size: 20px;
+    font-family: 'cairo';
+    width: 350px;
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    transform: translate(-30%,-30%);
+}
+
+.modal .btn-restart{
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+/*preload*/
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    transition: width .35s ease-in-out;
+  }
+  .lds-ripple div {
+    position: absolute;
+    border: 4px solid #2ecc71;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
