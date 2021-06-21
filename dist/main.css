@@ -220,6 +220,7 @@ h4{
   @media (max-width: 576px) { 
 
     .game-container{
+        width: 100%;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
     }
