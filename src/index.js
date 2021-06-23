@@ -16,12 +16,11 @@ import {
 //add preload
 preload(document.querySelector('.pre-container'));
 
-
 document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        removeLoad();      
-        init();
-    },500);
+        setTimeout(() => {
+            removeLoad();      
+            init();
+        },500);   
 });
 
 

@@ -40,57 +40,77 @@ function loadPar(cardId, value, par, dataGame){
         par.card2.value = value;
         par.card2.id = cardId;
 
-        checkPar(par, dataGame);
-
+        checkPar(par, dataGame)
+            .then(res => resetPar(par));
+        
     }
-
-    
 }
 
 function checkPar(par, dataGame){
+
+    return new Promise((res, rej) => {
+        if(par.card1.value !== '' && par.card2.value !== ''){
+
+            
+            dataGame.checkClick = false;
+            if(par.card1.value  === par.card2.value){
+                dataGame.count++;
+                setTimeout(() => {
+                    dataGame.checkClick = true;
+                }, 500)
+                   
+            }else{
+                flipBack(par.card1.id, par)
+                    .then(res => flipBack(par.card2.id, par)
+                                    .then(res => {
+                                        setTimeout(() => {
+                                            dataGame.checkClick = true;
+                                        }, 500)
+                                    }))
+                    
+                    
+            }
     
-    if(par.card1.value !== '' && par.card2.value !== ''){
-
-        if(par.card1.value  === par.card2.value){
-            dataGame.count++;   
-        }else{
-            flipBack(par.card1.id, par);
-            flipBack(par.card2.id, par);
+            
+            
+            if(dataGame.count === dataGame.countPart){
+                setTimeout(() => {
+                    dataGame.count = 0;
+                    gameOver();
+                }, 500)
+            }
+            
         }
-
-        
-        
-        if(dataGame.count === dataGame.countPart){
-            setTimeout(() => {
-                dataGame.count = 0;
-                gameOver();
-            }, 500)
-        }
-        
-    }
-    resetPar(par); 
+        res()
+    }) 
 }
 
 function flipBack(id, par){
-    let cards = document.querySelectorAll('.card');
+    return new Promise((res, rej) => {
+        let cards = document.querySelectorAll('.card');
 
-    cards.forEach( card => {
-        if(card.dataset.id === id){
-            //flip card
-            setTimeout(() => {
-                card.parentNode.classList.remove('container-item-selected');
-            }, 600)
-        }
-    });
+        cards.forEach( card => {
+            if(card.dataset.id === id){
+                //flip card
+                setTimeout(() => {
+                    card.parentNode.classList.remove('container-item-selected');
+                }, 600)
+            }
+        });
+        res();
+    })
+    
     
 }
 
 function resetPar(par){
+
     par.card1.value = '';
     par.card1.id = '';
     par.card2.value = '';
     par.card2.id = ''; 
-}
+
+}   
 
 async function getPokemon(dataGame){
     let data = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${dataGame.nivel}`)
@@ -174,12 +194,6 @@ function paintCard(pokemon){
 
 }
 
-// function getImg(url){
-//     return fetch(url)
-//             .then(res => res.json())
-//             .then( res => console.log(res))
-// }
-
 function preload(nodo){
 
     let $preload = document.createElement('div');
@@ -220,7 +234,7 @@ function init(){
             document.querySelector('h1').remove();
             preload($main);
             playGame();
-        },500);
+        }, 500);
     })
 
 }
@@ -256,13 +270,14 @@ function playGame(){
     
 }
 
-function play(){
+async function play(){
 
     //we initialize variable par
     let dataGame = {
         count: 0,
         countPart: 8,
-        nivel: 8
+        nivel: 8,
+        checkClick: true
     }
     
     const par = {
@@ -277,14 +292,19 @@ function play(){
     }
     
     document.addEventListener('click', e => {
-        flipCard(e, par, dataGame);
+        if(dataGame.checkClick){
+            flipCard(e, par, dataGame);
+        }
     });
     
     arrayPokemons(getPokemon(dataGame))
+        
         .then(res => res.forEach( pokemon => {
             dataPokemon( pokemon.url )
                 .then( res => paintCard( res ))
         }))
+        
+    ;
     
 }
 
